@@ -1,3 +1,5 @@
+import java.util.List;
+
 public abstract class Animal {
      // Whether the animal is alive or not.
      private boolean alive;
@@ -12,6 +14,8 @@ public abstract class Animal {
         this.field = field;
         setLocation(location);
      }
+
+     abstract public void act(List<Animal> newAnimals);
 
     /**
      * Place the animal at the new location in the given field.
