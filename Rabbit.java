@@ -53,10 +53,10 @@ public class Rabbit extends Animal
     public void run(List<Rabbit> newRabbits)
     {
         incrementAge();
-        if(alive) {
+        if(isAlive()) {
             giveBirth(newRabbits);            
             // Try to move into a free location.
-            Location newLocation = field.freeAdjacentLocation(location);
+            Location newLocation = getField().freeAdjacentLocation(getLocation());
             if(newLocation != null) {
                 setLocation(newLocation);
             }
@@ -66,40 +66,6 @@ public class Rabbit extends Animal
             }
         }
     }
-    
-    /**
-     * Check whether the rabbit is alive or not.
-     * @return true if the rabbit is still alive.
-     */
-    public boolean isAlive()
-    {
-        return alive;
-    }
-    
-    /**
-     * Indicate that the rabbit is no longer alive.
-     * It is removed from the field.
-     */
-    public void setDead()
-    {
-        alive = false;
-        if(location != null) {
-            field.clear(location);
-            location = null;
-            field = null;
-        }
-    }
-    
-    /**
-     * Return the rabbit's location.
-     * @return The rabbit's location.
-     */
-    public Location getLocation()
-    {
-        return location;
-    }
-    
-
 
     /**
      * Increase the age.
@@ -122,11 +88,11 @@ public class Rabbit extends Animal
     {
         // New rabbits are born into adjacent locations.
         // Get a list of adjacent free locations.
-        List<Location> free = field.getFreeAdjacentLocations(location);
+        List<Location> free = getField().getFreeAdjacentLocations(getLocation());
         int births = breed();
         for(int b = 0; b < births && free.size() > 0; b++) {
             Location loc = free.remove(0);
-            Rabbit young = new Rabbit(false, field, loc);
+            Rabbit young = new Rabbit(false, getField(), loc);
             newRabbits.add(young);
         }
     }
